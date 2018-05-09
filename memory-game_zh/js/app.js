@@ -88,9 +88,7 @@ function addOpenStatus(card) {
  * 用户点击卡片后的交互
  * @param card
  */
-// TODO:点击一匹配的卡片同样会使得match数组、moveCount增加
 function clickCard(card) {
-    console.log(isInMatchArray(card.target));
     if (card.target !== open[0] && isInMatchArray(card.target)) {
         showCard(card.target);
         addOpenStatus(card.target);
@@ -102,7 +100,7 @@ function clickCard(card) {
                     congratulactions();
                 }
             } else {
-                setTimeout(cardClose(open[0], open[1]), 2000);
+                setTimeout(function(){cardClose(open[0], open[1])}, 2000);
             }
         }
     }
@@ -114,7 +112,6 @@ function clickCard(card) {
  * @returns {boolean}
  */
 function isInMatchArray(card) {
-    console.log(match.length + match);
     for (var i = 0; i < match.length; i++) {
         if (card === match[i]) {
             return false;
@@ -218,4 +215,22 @@ function showStars() {
     }
 }
 
+function resetGame() {
+    var resetBtn = document.getElementsByClassName("refurbish");
+
+    resetBtn[0].forEach(addEventListener("click", resetHandle));
+}
+
+function resetHandle() {
+    var cards = document.getElementsByClassName("card");
+
+    creatHtml();
+    open = [];
+    match = [];
+    stars = 3;
+    moveCount = 0;
+
+    cards.forEach(function (t) { t.setAttribute("card"); });
+
+}
 cardChange();
