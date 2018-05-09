@@ -42,7 +42,6 @@ function creatHtml() {
         cardsFa[i].setAttribute("class", cards[i]);
     }
 }
-creatHtml();
 
 /*
  * 设置一张卡片的事件监听器。 如果该卡片被点击：
@@ -54,40 +53,59 @@ creatHtml();
  *    + 增加移动计数器并将其显示在页面上（将这个功能放在你从这个函数中调用的另一个函数中）
  *    + 如果所有卡都匹配，则显示带有最终分数的消息（将这个功能放在你从这个函数中调用的另一个函数中）
  */
+
+/**
+ * @description 给每张卡片设置监听器，并且控制整个游戏流程
+ */
 function cardChange() {
+    creatHtml();
     var deckCards = document.getElementsByClassName("deck")[0].getElementsByClassName("card");
     for (var i = 0; i < cards.length; i++) {
         deckCards[i].addEventListener("click", clickCard);
     }
 
 }
-// 显示卡片符号
+
+/**
+ * @description 翻开并显示卡片
+ * @param card
+ */
 function showCard(card) {
     var currentClass = card.className;
     var changedClass = currentClass + " show" + " open";
     card.setAttribute("class", changedClass);
 }
 
-// 将卡片的添加到状态为open的数组中
+/**
+ * @description 将卡片的添加到状态为open的数组中
+ * @param card
+ */
 function addOpenStatus(card) {
     var card = card.getElementsByTagName("i")[0];
     open.push(card);
-    // console.log(open);
+    // console.log(open.length);
 }
 
-// 点击卡片大手子
-function clickCard(e) {
+/**
+ *
+ * @param card
+ */
+function clickCard(card) {
     // console.log(e.target);
-    showCard(e.target);
-    addOpenStatus(e.target);
-    if (open.length === 1) {
-        console.log(open.length);
-        console.log(isMatch(e.target));
+    showCard(card.target);
+    addOpenStatus(card.target);
+    if (open.length === 2) {
+        // console.log(open.length);
+        console.log(isMatch(card.target));
     }
 
 }
 
-// 判断两张卡片是否匹配
+/**
+ * 判断两张卡片是否匹配
+ * @param card
+ * @returns {boolean}
+ */
 function isMatch(card) {
     var currentCard = card.getElementsByTagName("i")[0].className;
     var lastCard = open[0].className;
