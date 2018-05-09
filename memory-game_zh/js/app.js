@@ -33,7 +33,7 @@ function shuffle(array) {
 }
 
 function creatHtml() {
-    shuffle(cards);
+    // shuffle(cards);
     var deck = document.getElementsByClassName("deck");
     var cardsFa = deck[0].getElementsByTagName("i");
 
@@ -89,21 +89,22 @@ function addOpenStatus(card) {
  * @param card
  */
 function clickCard(card) {
-    showCard(card.target);
-    addOpenStatus(card.target);
-    moves();
-    if (open.length === 2) {
-        if (isMatch(card.target)) {
-            stayOpen(open[0], open[1]);
-            if (match.length === 16) {
-                congratulactions();
+    // do {
+    //     console.log(card.target);
+        showCard(card.target);
+        addOpenStatus(card.target);
+        moves();
+        if (open.length === 2) {
+            if (isMatch(card.target)) {
+                stayOpen(open[0], open[1]);
+                if (match.length === 16) {
+                    congratulactions();
+                }
+            } else {
+                setTimeout(cardClose(open[0], open[1]), 2000);
             }
-        } else {
-            setTimeout(cardClose(open[0],open[1]),2000);
         }
-    }
-
-
+    // }while (card.target !== open[0]);
 }
 
 /**
@@ -132,7 +133,6 @@ function stayOpen(card1, card2) {
 
     card1.setAttribute("class", matchClass);
     card2.setAttribute("class", matchClass);
-    console.log(match);
 }
 
 /**
@@ -155,6 +155,8 @@ function moves() {
     var moveSpan = document.getElementsByClassName("moves");
     moveCount++;
     moveSpan[0].innerHTML = moveCount;
+    // starsReduce();
+    showStars();
 }
 
 /**
@@ -162,17 +164,42 @@ function moves() {
  */
 function congratulactions() {
     var container = document.getElementsByClassName("container");
-    var cgtltBox = document.getElementsByClassName("congratulactions");
+    var cgtltBox = document.getElementsByClassName("congratulations");
     var finallyMove = document.getElementsByClassName("finally-move");
     var finallyStar = document.getElementsByClassName("finally-star");
 
     finallyMove[0].innerHTML = moveCount;
-    switch (stars) {
-        case 1: finallyStar[0].innerHTML = 1; return;
-        case 2: finallyStar[0].innerHTML = 2; return;
-        case 3: finallyStar[0].innerHTML = 3; return;
-    }
+
     container[0].setAttribute("class", "container hide");
     cgtltBox[0].setAttribute("class", "congratulations");
+    switch (stars) {
+        case 1: finallyStar[0].innerHTML = 1; break;
+        case 2: finallyStar[0].innerHTML = 2; break;
+        case 3: finallyStar[0].innerHTML = 3; break;
+    }
 }
+
+/**
+ * 当超过一定步数的时候，星星就会减少
+ */
+function showStars() {
+    var starsBox = document.getElementsByClassName("stars");
+    var starsShow = starsBox[0].getElementsByTagName("li");
+
+    if (moveCount <= 24) {
+        stars = 3;
+    } else if (moveCount <= 40) {
+        stars = 2;
+        if (starsShow.length > 2) {
+            starsBox[0].removeChild(starsShow[starsShow.length-1]);
+        }
+
+    } else if (moveCount >= 64) {
+        stars = 1;
+        if (starsShow.length > 1) {
+            starsBox[0].removeChild(starsShow[starsShow.length-1]);
+        }
+    }
+}
+
 cardChange();
