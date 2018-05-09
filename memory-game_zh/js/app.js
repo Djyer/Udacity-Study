@@ -8,6 +8,7 @@ var cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
 var open = [];
 var match = [];
 var moveCount = 0;
+var stars = 3;
 
 /*
  * 显示页面上的卡片
@@ -84,7 +85,7 @@ function addOpenStatus(card) {
 }
 
 /**
- *
+ * 用户点击卡片后的交互
  * @param card
  */
 function clickCard(card) {
@@ -94,10 +95,14 @@ function clickCard(card) {
     if (open.length === 2) {
         if (isMatch(card.target)) {
             stayOpen(open[0], open[1]);
+            if (match.length === 16) {
+                congratulactions();
+            }
         } else {
             setTimeout(cardClose(open[0],open[1]),2000);
         }
     }
+
 
 }
 
@@ -150,5 +155,24 @@ function moves() {
     var moveSpan = document.getElementsByClassName("moves");
     moveCount++;
     moveSpan[0].innerHTML = moveCount;
+}
+
+/**
+ * 玩家完成游戏后，显示恭喜页面，显示分数和步数
+ */
+function congratulactions() {
+    var container = document.getElementsByClassName("container");
+    var cgtltBox = document.getElementsByClassName("congratulactions");
+    var finallyMove = document.getElementsByClassName("finally-move");
+    var finallyStar = document.getElementsByClassName("finally-star");
+
+    finallyMove[0].innerHTML = moveCount;
+    switch (stars) {
+        case 1: finallyStar[0].innerHTML = 1; return;
+        case 2: finallyStar[0].innerHTML = 2; return;
+        case 3: finallyStar[0].innerHTML = 3; return;
+    }
+    container[0].setAttribute("class", "container hide");
+    cgtltBox[0].setAttribute("class", "congratulations");
 }
 cardChange();
