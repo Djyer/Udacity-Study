@@ -88,8 +88,10 @@ function addOpenStatus(card) {
  * 用户点击卡片后的交互
  * @param card
  */
+// TODO:点击一匹配的卡片同样会使得match数组、moveCount增加
 function clickCard(card) {
-    if (card.target !== open[0]) {
+    console.log(isInMatchArray(card.target));
+    if (card.target !== open[0] && isInMatchArray(card.target)) {
         showCard(card.target);
         addOpenStatus(card.target);
         moves();
@@ -104,7 +106,21 @@ function clickCard(card) {
             }
         }
     }
+}
 
+/**
+ * 判断卡片是否已在match数组中
+ * @param card
+ * @returns {boolean}
+ */
+function isInMatchArray(card) {
+    console.log(match.length + match);
+    for (var i = 0; i < match.length; i++) {
+        if (card === match[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
