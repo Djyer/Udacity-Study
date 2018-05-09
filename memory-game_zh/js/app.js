@@ -7,6 +7,7 @@ var cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
             "fas fa-bicycle", "fas fa-bicycle", "fas fa-heart", "fas fa-heart"];
 var open = [];
 var match = [];
+var moveCount = 0;
 
 /*
  * 显示页面上的卡片
@@ -53,7 +54,7 @@ function creatHtml() {
  */
 
 /**
- * 给每张卡片设置监听器，并且控制整个游戏流程
+ * 给每张卡片设置监听器
  */
 function cardChange() {
     creatHtml();
@@ -89,12 +90,12 @@ function addOpenStatus(card) {
 function clickCard(card) {
     showCard(card.target);
     addOpenStatus(card.target);
+    moves();
     if (open.length === 2) {
-        console.log(isMatch(card.target));
         if (isMatch(card.target)) {
             stayOpen(open[0], open[1]);
         } else {
-            setTimeout(cardClose(open[0], open[1]),2000);
+            setTimeout(cardClose(open[0],open[1]),2000);
         }
     }
 
@@ -108,13 +109,46 @@ function clickCard(card) {
 function isMatch(card) {
     var currentCard = card.getElementsByTagName("i")[0].className;
     var lastCard = open[0].getElementsByTagName("i")[0].className;
-    // console.log(currentCard);
-    // console.log(lastCard);
     if (lastCard === currentCard) {
         return true;
     }
     return false;
 }
 
+/**
+ * 将卡片保持翻转打开状态，并将卡片放入match数组中，并且从open数组中删除
+ * @param card1
+ * @param card2
+ */
+function stayOpen(card1, card2) {
+    var matchClass = "card match";
+    match.push(open.pop());
+    match.push(open.pop());
 
+    card1.setAttribute("class", matchClass);
+    card2.setAttribute("class", matchClass);
+    console.log(match);
+}
+
+/**
+ * 将卡片合上，并从open数组中删除
+ * @param card1
+ * @param card2
+ */
+function cardClose(card1, card2) {
+    open.pop();
+    open.pop();
+
+    card1.setAttribute("class", "card");
+    card2.setAttribute("class", "card");
+}
+
+/**
+ * 点击次数计数
+ */
+function moves() {
+    var moveSpan = document.getElementsByClassName("moves");
+    moveCount++;
+    moveSpan[0].innerHTML = moveCount;
+}
 cardChange();
