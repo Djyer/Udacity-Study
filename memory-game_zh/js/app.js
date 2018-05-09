@@ -6,9 +6,7 @@ var cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
             "fab fa-pagelines", "fab fa-pagelines", "fas fa-globe", "fas fa-globe",
             "fas fa-bicycle", "fas fa-bicycle", "fas fa-heart", "fas fa-heart"];
 var open = [];
-console.log(open.length);
-
-
+var match = [];
 
 /*
  * 显示页面上的卡片
@@ -55,7 +53,7 @@ function creatHtml() {
  */
 
 /**
- * @description 给每张卡片设置监听器，并且控制整个游戏流程
+ * 给每张卡片设置监听器，并且控制整个游戏流程
  */
 function cardChange() {
     creatHtml();
@@ -67,7 +65,7 @@ function cardChange() {
 }
 
 /**
- * @description 翻开并显示卡片
+ * 翻开并显示卡片
  * @param card
  */
 function showCard(card) {
@@ -77,13 +75,11 @@ function showCard(card) {
 }
 
 /**
- * @description 将卡片的添加到状态为open的数组中
+ * 将卡片添加到状态为open的数组中
  * @param card
  */
 function addOpenStatus(card) {
-    var card = card.getElementsByTagName("i")[0];
     open.push(card);
-    // console.log(open.length);
 }
 
 /**
@@ -91,12 +87,15 @@ function addOpenStatus(card) {
  * @param card
  */
 function clickCard(card) {
-    // console.log(e.target);
     showCard(card.target);
     addOpenStatus(card.target);
     if (open.length === 2) {
-        // console.log(open.length);
         console.log(isMatch(card.target));
+        if (isMatch(card.target)) {
+            stayOpen(open[0], open[1]);
+        } else {
+            setTimeout(cardClose(open[0], open[1]),2000);
+        }
     }
 
 }
@@ -108,12 +107,14 @@ function clickCard(card) {
  */
 function isMatch(card) {
     var currentCard = card.getElementsByTagName("i")[0].className;
-    var lastCard = open[0].className;
-    console.log(currentCard);
-    console.log(lastCard);
+    var lastCard = open[0].getElementsByTagName("i")[0].className;
+    // console.log(currentCard);
+    // console.log(lastCard);
     if (lastCard === currentCard) {
         return true;
     }
     return false;
 }
+
+
 cardChange();
