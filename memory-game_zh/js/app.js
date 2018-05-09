@@ -89,8 +89,7 @@ function addOpenStatus(card) {
  * @param card
  */
 function clickCard(card) {
-    // do {
-    //     console.log(card.target);
+    if (card.target !== open[0]) {
         showCard(card.target);
         addOpenStatus(card.target);
         moves();
@@ -104,7 +103,8 @@ function clickCard(card) {
                 setTimeout(cardClose(open[0], open[1]), 2000);
             }
         }
-    // }while (card.target !== open[0]);
+    }
+
 }
 
 /**
