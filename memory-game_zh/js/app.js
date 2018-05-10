@@ -183,7 +183,7 @@ function congratulactions() {
     var cgtltBox = document.getElementsByClassName("congratulations");
     var finallyMove = document.getElementsByClassName("finally-move");
     var finallyStar = document.getElementsByClassName("finally-star");
-    
+
     container[0].setAttribute("class", "container hide");
     cgtltBox[0].setAttribute("class", "congratulations");
     finallyMove[0].innerHTML = moveCount;
@@ -221,7 +221,7 @@ function showStars() {
  * 为重新开始游戏按钮添加监听
  */
 function resetGame() {
-    var resetBtn = document.getElementsByClassName("refurbish");
+    var resetBtn = document.getElementsByClassName("restart");
 
     for (var i = 0; i < resetBtn.length; i++) {
         resetBtn[i].addEventListener("click", resetHandle);
