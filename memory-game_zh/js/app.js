@@ -63,6 +63,7 @@ function cardChange() {
     for (var i = 0; i < cards.length; i++) {
         deckCards[i].addEventListener("click", clickCard);
     }
+    resetGame();
 
 }
 
@@ -98,6 +99,8 @@ function clickCard(card) {
                 stayOpen(open[0], open[1]);
                 if (match.length === 16) {
                     congratulactions();
+                    alert("he");
+
                 }
             } else {
                 setTimeout(function(){cardClose(open[0], open[1])}, 2000);
@@ -180,11 +183,10 @@ function congratulactions() {
     var cgtltBox = document.getElementsByClassName("congratulations");
     var finallyMove = document.getElementsByClassName("finally-move");
     var finallyStar = document.getElementsByClassName("finally-star");
-
-    finallyMove[0].innerHTML = moveCount;
-
+    
     container[0].setAttribute("class", "container hide");
     cgtltBox[0].setAttribute("class", "congratulations");
+    finallyMove[0].innerHTML = moveCount;
     switch (stars) {
         case 1: finallyStar[0].innerHTML = 1; break;
         case 2: finallyStar[0].innerHTML = 2; break;
@@ -215,12 +217,20 @@ function showStars() {
     }
 }
 
+/**
+ * 为重新开始游戏按钮添加监听
+ */
 function resetGame() {
     var resetBtn = document.getElementsByClassName("refurbish");
 
-    resetBtn[0].forEach(addEventListener("click", resetHandle));
+    for (var i = 0; i < resetBtn.length; i++) {
+        resetBtn[i].addEventListener("click", resetHandle);
+    }
 }
 
+/**
+ * 重新开始功能
+ */
 function resetHandle() {
     var cards = document.getElementsByClassName("card");
 
@@ -230,7 +240,17 @@ function resetHandle() {
     stars = 3;
     moveCount = 0;
 
-    cards.forEach(function (t) { t.setAttribute("card"); });
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].setAttribute("class", "card");
+    }
 
+    var moveSpan = document.getElementsByClassName("moves");
+    moveSpan[0].innerHTML = moveCount;
+
+    var container = document.getElementsByClassName("container");
+    var cgtltBox = document.getElementsByClassName("congratulations");
+
+    container[0].setAttribute("class", "container");
+    cgtltBox[0].setAttribute("class", "congratulations hide");
 }
 cardChange();
