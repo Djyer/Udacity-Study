@@ -139,7 +139,7 @@ h1 {
     margin: 0;
 }
 
-.refurbish {
+button.restart {
     background: #02ccba;
     color: white;
     font-size: 20px;
