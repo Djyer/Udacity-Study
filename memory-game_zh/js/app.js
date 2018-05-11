@@ -103,7 +103,7 @@ function clickCard(card) {
 
                 }
             } else {
-                setTimeout(function(){cardClose(open[0], open[1])}, 2000);
+                cardClose(open[0], open[1]);
             }
         }
     }
@@ -160,8 +160,10 @@ function cardClose(card1, card2) {
     open.pop();
     open.pop();
 
-    card1.setAttribute("class", "card");
-    card2.setAttribute("class", "card");
+    setTimeout(function() {
+        card1.setAttribute("class", "card");
+        card2.setAttribute("class", "card");
+    },1000);
 }
 
 /**
