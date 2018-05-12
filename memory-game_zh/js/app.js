@@ -154,10 +154,21 @@ function cardClose(card1, card2) {
     open.pop();
     open.pop();
 
+    wrongEffect(card1, card2);
     setTimeout(function() {
         card1.setAttribute("class", "card");
         card2.setAttribute("class", "card");
-    },1000);
+    },700);
+}
+
+/**
+ * 不匹配效果
+ * @param card1
+ * @param card2
+ */
+function wrongEffect(card1, card2) {
+    card1.setAttribute("class", "card wrong");
+    card2.setAttribute("class", "card wrong");
 }
 
 /**
