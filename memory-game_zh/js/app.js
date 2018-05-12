@@ -1,14 +1,14 @@
 /*
  * 创建一个包含所有卡片的数组
  */
-var cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
+let cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
             "fab fa-telegram-plane", "fab fa-telegram-plane", "far fa-gem", "far fa-gem",
             "fab fa-pagelines", "fab fa-pagelines", "fas fa-globe", "fas fa-globe",
             "fas fa-bicycle", "fas fa-bicycle", "fas fa-heart", "fas fa-heart"];
-var open = [];
-var match = [];
-var moveCount = 0;
-var stars = 3;
+let open = [];
+let match = [];
+let moveCount = 0;
+let stars = 3;
 
 /*
  * 显示页面上的卡片
@@ -19,7 +19,7 @@ var stars = 3;
 
 // 洗牌函数来自于 http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -34,11 +34,10 @@ function shuffle(array) {
 
 function creatHtml() {
     // shuffle(cards);
-    var deck = document.getElementsByClassName("deck");
-    var cardsFa = deck[0].getElementsByTagName("i");
+    const deck = document.getElementsByClassName("deck");
+    const cardsFa = deck[0].getElementsByTagName("i");
 
-    for (var i = 0; i < cards.length; i++){
-        // console.log(cardsFa[i]);
+    for (let i = 0; i < cards.length; i++){
         cardsFa[i].setAttribute("class", cards[i]);
     }
 }
@@ -59,8 +58,8 @@ function creatHtml() {
  */
 function cardChange() {
     creatHtml();
-    var deckCards = document.getElementsByClassName("deck")[0].getElementsByClassName("card");
-    for (var i = 0; i < cards.length; i++) {
+    const deckCards = document.getElementsByClassName("deck")[0].getElementsByClassName("card");
+    for (let i = 0; i < cards.length; i++) {
         deckCards[i].addEventListener("click", clickCard);
     }
     resetGame();
@@ -72,8 +71,8 @@ function cardChange() {
  * @param card
  */
 function showCard(card) {
-    var currentClass = card.className;
-    var changedClass = currentClass + " show" + " open";
+    const currentClass = card.className;
+    const changedClass = currentClass + " show" + " open";
     card.setAttribute("class", changedClass);
 }
 
@@ -99,8 +98,6 @@ function clickCard(card) {
                 stayOpen(open[0], open[1]);
                 if (match.length === 16) {
                     congratulactions();
-                    alert("he");
-
                 }
             } else {
                 cardClose(open[0], open[1]);
@@ -115,7 +112,7 @@ function clickCard(card) {
  * @returns {boolean}
  */
 function isInMatchArray(card) {
-    for (var i = 0; i < match.length; i++) {
+    for (let i = 0; i < match.length; i++) {
         if (card === match[i]) {
             return false;
         }
@@ -129,12 +126,9 @@ function isInMatchArray(card) {
  * @returns {boolean}
  */
 function isMatch(card) {
-    var currentCard = card.getElementsByTagName("i")[0].className;
-    var lastCard = open[0].getElementsByTagName("i")[0].className;
-    if (lastCard === currentCard) {
-        return true;
-    }
-    return false;
+    const currentCard = card.getElementsByTagName("i")[0].className;
+    const lastCard = open[0].getElementsByTagName("i")[0].className;
+    return (lastCard === currentCard) ? true : false;
 }
 
 /**
@@ -143,7 +137,7 @@ function isMatch(card) {
  * @param card2
  */
 function stayOpen(card1, card2) {
-    var matchClass = "card match";
+    const matchClass = "card match";
     match.push(open.pop());
     match.push(open.pop());
 
@@ -170,10 +164,9 @@ function cardClose(card1, card2) {
  * 点击次数计数
  */
 function moves() {
-    var moveSpan = document.getElementsByClassName("moves");
+    const moveSpan = document.getElementsByClassName("moves");
     moveCount++;
     moveSpan[0].innerHTML = moveCount;
-    // starsReduce();
     showStars();
 }
 
@@ -181,10 +174,10 @@ function moves() {
  * 玩家完成游戏后，显示恭喜页面，显示分数和步数
  */
 function congratulactions() {
-    var container = document.getElementsByClassName("container");
-    var cgtltBox = document.getElementsByClassName("congratulations");
-    var finallyMove = document.getElementsByClassName("finally-move");
-    var finallyStar = document.getElementsByClassName("finally-star");
+    const container = document.getElementsByClassName("container");
+    const cgtltBox = document.getElementsByClassName("congratulations");
+    const finallyMove = document.getElementsByClassName("finally-move");
+    const finallyStar = document.getElementsByClassName("finally-star");
 
     container[0].setAttribute("class", "container hide");
     cgtltBox[0].setAttribute("class", "congratulations");
@@ -200,22 +193,33 @@ function congratulactions() {
  * 当超过一定步数的时候，星星就会减少
  */
 function showStars() {
-    var starsBox = document.getElementsByClassName("stars");
-    var starsShow = starsBox[0].getElementsByTagName("li");
-
-    if (moveCount <= 24) {
+    if (moveCount <= 3) {
         stars = 3;
-    } else if (moveCount <= 40) {
+    } else if (moveCount <= 6) {
         stars = 2;
-        if (starsShow.length > 2) {
-            starsBox[0].removeChild(starsShow[starsShow.length-1]);
-        }
-
-    } else if (moveCount >= 64) {
+        createStars();
+    } else if (moveCount >= 10) {
         stars = 1;
-        if (starsShow.length > 1) {
-            starsBox[0].removeChild(starsShow[starsShow.length-1]);
-        }
+        createStars();
+    }
+}
+
+/**
+ * 根据star的数量，将html中的星星增加或减少
+ */
+function createStars() {
+    const starsBox = document.getElementsByClassName("stars");
+    let starsShow = starsBox[0].getElementsByTagName("li");
+
+    if (starsShow.length > stars) {
+        starsBox[0].removeChild(starsShow[starsShow.length - 1]);
+    }
+    while (starsShow.length < stars) {
+        const starLi = document.createElement("li");
+        const starI = document.createElement("i");
+        starI.setAttribute("class", "fa fa-star");
+        starLi.appendChild(starI);
+        starsBox[0].appendChild(starLi);
     }
 }
 
@@ -223,9 +227,9 @@ function showStars() {
  * 为重新开始游戏按钮添加监听
  */
 function resetGame() {
-    var resetBtn = document.getElementsByClassName("restart");
+    const resetBtn = document.getElementsByClassName("restart");
 
-    for (var i = 0; i < resetBtn.length; i++) {
+    for (let i = 0; i < resetBtn.length; i++) {
         resetBtn[i].addEventListener("click", resetHandle);
     }
 }
@@ -234,7 +238,7 @@ function resetGame() {
  * 重新开始功能
  */
 function resetHandle() {
-    var cards = document.getElementsByClassName("card");
+    const cards = document.getElementsByClassName("card");
 
     creatHtml();
     open = [];
@@ -242,17 +246,18 @@ function resetHandle() {
     stars = 3;
     moveCount = 0;
 
-    for (var i = 0; i < cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
         cards[i].setAttribute("class", "card");
     }
 
-    var moveSpan = document.getElementsByClassName("moves");
+    const moveSpan = document.getElementsByClassName("moves");
     moveSpan[0].innerHTML = moveCount;
 
-    var container = document.getElementsByClassName("container");
-    var cgtltBox = document.getElementsByClassName("congratulations");
+    const container = document.getElementsByClassName("container");
+    const cgtltBox = document.getElementsByClassName("congratulations");
 
     container[0].setAttribute("class", "container");
     cgtltBox[0].setAttribute("class", "congratulations hide");
+    createStars();
 }
 cardChange();
