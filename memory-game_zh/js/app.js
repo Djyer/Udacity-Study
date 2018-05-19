@@ -76,21 +76,13 @@ function showCard(card) {
 }
 
 /**
- * 将卡片添加到状态为open的数组中
- * @param card
- */
-function addOpenStatus(card) {
-    open.push(card);
-}
-
-/**
  * 用户点击卡片后的交互
  * @param card
  */
 function clickCard(card) {
     if (card.target !== open[0] && isInMatchArray(card.target)) {
         showCard(card.target);
-        addOpenStatus(card.target);
+        open.push(card.target);
         moves();
         if (open.length === 2) {
             if (isMatch(card.target)) {
