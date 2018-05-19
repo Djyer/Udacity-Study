@@ -85,7 +85,10 @@ h1 {
     font-size: 33px;
 }
 
-.deck .card.show .fa-diamond {
+.deck .card.wrong {
+    cursor: default;
+    background: red;
+    font-size: 33px;
 }
 /*
  * Styles for the Score Panel
@@ -98,7 +101,6 @@ h1 {
 }
 
 .score-panel .stars {
-    margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
@@ -109,6 +111,11 @@ h1 {
     display: inline-block;
 }
 
+.score-panel .time-box {
+    display: inline-block;
+    margin-left: 15px;
+    width: 75px;
+}
 .score-panel .restart {
     float: right;
     cursor: pointer;
