@@ -9,7 +9,7 @@ let match = [];
 let moveCount = 0;
 let stars = 3;
 let time = 0;
-let onOff = true;
+let firstClick = true;
 
 
 /*
@@ -92,6 +92,7 @@ function clickCard(card) {
             if (isMatch(card.target)) {
                 stayOpen(open[0], open[1]);
                 if (match.length === 16) {
+                    calculagraph(false);
                     congratulactions();
                 }
             } else {
@@ -103,15 +104,20 @@ function clickCard(card) {
 
 /**
  * 计时器
+ * @param onOff
  */
-function calculagraph(off = false) {
-    if (onOff && !off) {
-        var timer = setInterval( () => time++, 1000);
-        onOff = false;
-    }else {
+function calculagraph(onOff = true) {
+    if (firstClick && onOff) {
+        timer = setInterval( () => {
+            time++;
+            console.log(time);
+        }, 1000);
+        firstClick = false;
+    } else if (!firstClick && !onOff) {
         clearInterval(timer);
     }
 }
+
 /**
  * 判断卡片是否已在match数组中
  * @param card
@@ -188,17 +194,20 @@ function moves() {
 }
 
 /**
- * 玩家完成游戏后，显示恭喜页面，显示分数和步数
+ * 玩家完成游戏后，显示恭喜页面，显示分数、时间和步数
  */
 function congratulactions() {
     const container = document.getElementsByClassName("container");
     const cgtltBox = document.getElementsByClassName("congratulations");
     const finallyMove = document.getElementsByClassName("finally-move");
     const finallyStar = document.getElementsByClassName("finally-star");
+    const calu = document.getElementsByClassName("finally-time");
 
     container[0].setAttribute("class", "container hide");
     cgtltBox[0].setAttribute("class", "congratulations");
     finallyMove[0].innerHTML = moveCount;
+    calu[0].innerHTML = time;
+
     switch (stars) {
         case 1: finallyStar[0].innerHTML = 1; break;
         case 2: finallyStar[0].innerHTML = 2; break;
@@ -262,6 +271,8 @@ function resetHandle() {
     match = [];
     stars = 3;
     moveCount = 0;
+    time = 0;
+    firstClick = true;
 
     for (let i = 0; i < cards.length; i++) {
         cards[i].setAttribute("class", "card");
@@ -275,6 +286,8 @@ function resetHandle() {
 
     container[0].setAttribute("class", "container");
     cgtltBox[0].setAttribute("class", "congratulations hide");
+
+
     createStars();
 }
 cardChange();
