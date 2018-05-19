@@ -92,7 +92,6 @@ function clickCard(card) {
             if (isMatch(card.target)) {
                 stayOpen(open[0], open[1]);
                 if (match.length === 16) {
-                    calculagraph(false);
                     congratulactions();
                 }
             } else {
@@ -106,17 +105,15 @@ function clickCard(card) {
  * 计时器
  * @param onOff
  */
-function calculagraph(onOff = true) {
+function calculagraph() {
     const timeSpan = document.getElementsByClassName("time");
 
-    if (firstClick && onOff) {
+    if (firstClick) {
         timer = setInterval( () => {
             time++;
             timeSpan[0].innerHTML = time;
         }, 1000);
         firstClick = false;
-    } else if (!firstClick && !onOff) {
-        clearInterval(timer);
     }
 }
 
@@ -199,6 +196,7 @@ function moves() {
  * 玩家完成游戏后，显示恭喜页面，显示分数、时间和步数
  */
 function congratulactions() {
+
     const container = document.getElementsByClassName("container");
     const cgtltBox = document.getElementsByClassName("congratulations");
     const finallyMove = document.getElementsByClassName("finally-move");
@@ -268,7 +266,9 @@ function resetGame() {
 function resetHandle() {
     const cards = document.getElementsByClassName("card");
 
+    clearInterval(timer);
     creatHtml();
+
     open = [];
     match = [];
     stars = 3;
@@ -281,7 +281,10 @@ function resetHandle() {
     }
 
     const moveSpan = document.getElementsByClassName("moves");
+    const calu = document.getElementsByClassName("time");
     moveSpan[0].innerHTML = moveCount;
+    calu[0].innerHTML = time;
+
 
     const container = document.getElementsByClassName("container");
     const cgtltBox = document.getElementsByClassName("congratulations");
