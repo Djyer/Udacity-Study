@@ -8,6 +8,9 @@ let open = [];
 let match = [];
 let moveCount = 0;
 let stars = 3;
+let time = 0;
+let onOff = true;
+
 
 /*
  * 显示页面上的卡片
@@ -80,6 +83,7 @@ function showCard(card) {
  * @param card
  */
 function clickCard(card) {
+    calculagraph();
     if (card.target !== open[0] && isInMatchArray(card.target)) {
         showCard(card.target);
         open.push(card.target);
@@ -97,6 +101,17 @@ function clickCard(card) {
     }
 }
 
+/**
+ * 计时器
+ */
+function calculagraph(off = false) {
+    if (onOff && !off) {
+        var timer = setInterval( () => time++, 1000);
+        onOff = false;
+    }else {
+        clearInterval(timer);
+    }
+}
 /**
  * 判断卡片是否已在match数组中
  * @param card
