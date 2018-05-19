@@ -1,10 +1,9 @@
 /*
  * 创建一个包含所有卡片的数组
  */
-let cards = ["fab fa-github", "fab fa-github", "fas fa-anchor", "fas fa-anchor",
-            "fab fa-telegram-plane", "fab fa-telegram-plane", "far fa-gem", "far fa-gem",
-            "fab fa-pagelines", "fab fa-pagelines", "fas fa-globe", "fas fa-globe",
-            "fas fa-bicycle", "fas fa-bicycle", "fas fa-heart", "fas fa-heart"];
+const symbols = ["fab fa-github", "fas fa-anchor", "fab fa-telegram-plane", "far fa-gem",
+    "fab fa-pagelines", "fas fa-globe", "fas fa-bicycle", "fas fa-heart"];
+let cards = [...symbols, ...symbols];
 let open = [];
 let match = [];
 let moveCount = 0;
