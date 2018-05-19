@@ -35,7 +35,7 @@ function shuffle(array) {
 }
 
 function creatHtml() {
-    // shuffle(cards);
+    shuffle(cards);
     const deck = document.getElementsByClassName("deck");
     const cardsFa = deck[0].getElementsByTagName("i");
 
@@ -107,10 +107,12 @@ function clickCard(card) {
  * @param onOff
  */
 function calculagraph(onOff = true) {
+    const timeSpan = document.getElementsByClassName("time");
+
     if (firstClick && onOff) {
         timer = setInterval( () => {
             time++;
-            console.log(time);
+            timeSpan[0].innerHTML = time;
         }, 1000);
         firstClick = false;
     } else if (!firstClick && !onOff) {
@@ -219,12 +221,12 @@ function congratulactions() {
  * 当超过一定步数的时候，星星就会减少
  */
 function showStars() {
-    if (moveCount <= 3) {
+    if (moveCount <= 24) {
         stars = 3;
-    } else if (moveCount <= 6) {
+    } else if (moveCount <= 40) {
         stars = 2;
         createStars();
-    } else if (moveCount >= 10) {
+    } else if (moveCount >= 64) {
         stars = 1;
         createStars();
     }
