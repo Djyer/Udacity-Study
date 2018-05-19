@@ -114,7 +114,7 @@ h1 {
 .score-panel .time-box {
     display: inline-block;
     margin-left: 15px;
-    width: 75px;
+    width: 80px;
 }
 .score-panel .restart {
     float: right;
